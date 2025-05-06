@@ -9,5 +9,6 @@
 
 - ☕生活笔记
   - [时间管理](life/time-management.md)
+  - [星露谷物语](life/Stardew_Valley.md)
 
 ---
