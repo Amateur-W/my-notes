@@ -136,3 +136,39 @@ class Group {
 最后运行构造方法里的代码，覆盖前面的值。
 
 一个构造方法可以调用其他构造方法，这样做的目的是便于代码复用。调用其他构造方法的语法是this(…)：
+
+- 方法重载：
+这种方法名相同，但各自的参数不同，称为方法重载（Overload）。
+
+注意：方法重载的返回值类型通常都是相同的。
+
+方法重载的目的是，功能类似的方法使用同一名字，更容易记住，因此，调用起来更简单。
+
+- 继承:
+Java使用extends关键字来实现继承->
+
+```java 
+class Person {
+    private String name;
+    private int age;
+
+    public String getName() {...}
+    public void setName(String name) {...}
+    public int getAge() {...}
+    public void setAge(int age) {...}
+}
+
+class Student extends Person {
+    // 不要重复name和age字段/方法,
+    // 只需要定义新增score字段/方法:
+    private int score;
+
+    public int getScore() { … }
+    public void setScore(int score) { … }
+}
+```
+Person是父类，student是子类。
+为了让子类可以访问父类的字段，我们需要把private改为protected。用protected修饰的字段可以被子类访问
+
+**继承，方法重写，多态**很重要
+
