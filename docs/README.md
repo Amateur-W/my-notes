@@ -1,5 +1,3 @@
-
-
 🍃
 
 We were born to pursue knowledge,
