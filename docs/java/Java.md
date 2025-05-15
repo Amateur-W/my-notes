@@ -192,9 +192,7 @@ public String toString() {
 
 ```java
 public class Person {
-    public Person(String name) {
-        ...
-    }
+    public Person(String name) { ... }
 }
 
 public class Student extends Person {
@@ -220,7 +218,7 @@ public class Student extends Person {
 
 ```java
 Person p = new Student();
-p.run(); // 实际调用的是 Student 重写的 run()
+ p.run(); // 实际调用的是 Student 重写的 run()
 ```
 
 > Java 方法是 **动态绑定**，属性不是！
@@ -231,7 +229,7 @@ p.run(); // 实际调用的是 Student 重写的 run()
 
 ```java
 Person p = new Student();
-p.study(); // ❌ 报错，编译期不可见
+ p.study(); // ❌ 报错，编译期不可见
 ```
 
 ---
@@ -243,7 +241,7 @@ p.study(); // ❌ 报错，编译期不可见
 ```java
 Person p = new Student();
 Student s = (Student) p;
-s.study(); // ✅ 正常
+ s.study(); // ✅ 正常
 ```
 
 ### 注意事项：
@@ -267,3 +265,165 @@ if (p instanceof Student) {
 
 ---
 
+## 🔒 final 关键字
+
+### 定义
+
+`final` 可以修饰**类**、**方法**、**变量**，用于声明“不可变”或“不可被继承/重写”。
+
+### 用法
+
+* **修饰类**：表示该类不能被继承。
+
+  ```java
+  public final class Constants { }
+  ```
+* **修饰方法**：表示该方法不能被子类重写。
+
+  ```java
+  public class A {
+      public final void doSomething() { ... }
+  }
+  ```
+* **修饰变量**：表示该变量赋值后不能再修改（常量）。
+
+  ```java
+  public class B {
+      public static final double PI = 3.1415926;
+  }
+  ```
+
+### 注意事项
+
+* `final` 类不能有子类。
+* `final` 方法不能被 override。
+* `final` 实例变量必须在声明时或构造器中初始化。
+* `final` 局部变量必须在赋值后才能使用。
+
+---
+
+## 📌 常量（Constant）
+
+### 定义
+
+常量是被声明为 `final` 的变量，其值在运行时不会改变。
+
+### 使用场景
+
+* 记录系统配置信息，如文件路径、端口号等。
+* 避免“魔法数字”，提高代码可读性和可维护性。
+
+### 优势
+
+* **可读性**：用命名常量替代硬编码值。
+* **安全性**：防止意外修改。
+* **性能**：JVM 可对 final 常量进行优化（编译期常量内联）。
+
+### 原理
+
+* 编译期常量会被编译器内联到引用它的代码中（常量池）。
+* 修改常量值后需要重新编译所有使用方，以保证引用一致。
+
+---
+
+## 🧩 设计模式（Design Patterns）
+
+### 什么是设计模式？
+
+设计模式是被反复验证的**可重用解决方案**，用于解决软件设计中常见的问题。
+
+### 设计模式解决的问题
+
+* 提高代码复用性和可维护性
+* 降低模块间耦合度
+* 提高系统的灵活性和可扩展性
+
+### 如何使用设计模式？
+
+1. 理解模式的意图、适用场景、结构和优缺点。
+2. 根据需求选择合适的模式。
+3. 遵循设计模式的类图和示例代码，实现一致性。
+
+---
+
+### 单例模式（Singleton Pattern）
+
+#### 定义
+
+确保一个类**只**能有一个实例，并提供一个全局访问点。
+
+#### 实现方法
+
+##### 饿汉式单例（线程安全）
+
+```java
+public class Singleton {
+    private static final Singleton INSTANCE = new Singleton();
+    private Singleton() {}
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+##### 懒汉式单例（线程不安全）
+
+```java
+public class Singleton {
+    private static Singleton instance;
+    private Singleton() {}
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+##### 双重检查锁（线程安全懒加载）
+
+```java
+public class Singleton {
+    private static volatile Singleton instance;
+    private Singleton() {}
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+
+#### 注意事项
+
+* 私有化构造器，防止外部实例化。
+* 使用 `volatile` 避免指令重排序导致的线程安全问题。
+* 序列化时通过 `readResolve()` 方法确保单例。
+* 使用枚举实现单例最为简洁且防止反序列化破坏单例：
+
+  ```java
+  public enum SingletonEnum { INSTANCE; }
+  ```
+
+#### 应用场景
+
+* 日志管理器、配置管理器、线程池、缓存管理、驱动程序等。
+
+---
+
+你已系统掌握 Java 的基础语法和核心面向对象概念，接下来可以继续学习：
+
+* 抽象类与接口
+* Java 异常处理机制
+* 集合框架（List、Map、Set）
+* Lambda 表达式 & Stream API
+* IO 流与文件操作
+* 多线程与并发
+
+欢迎继续深入探索 🚀
